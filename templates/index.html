@@ -1,0 +1,10 @@
+<!doctype html>
+<html>
+    <script src="/static/htmx_1.7.0.js"></script>
+    <body hx-sse="connect:/events">
+        <form hx-post="message" hx-target="#message" hx-swap="outerHTML">
+        Message : <input name="message" id="message"/> <input type="submit">
+        </form>
+        <div hx-sse="swap:evt" hx-swap="afterbegin"></div>
+    </body>
+</html>
