@@ -4,6 +4,7 @@ import (
 	"embed"
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/flibustenet/chat/handlers"
 )
@@ -18,8 +19,12 @@ func main() {
 	http.HandleFunc("/message", handlers.Message)
 	http.HandleFunc("/", handlers.Index)
 
-	fmt.Println("Listen :8888")
-	err := http.ListenAndServe(":8888", nil)
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	fmt.Println("Listen :" + port)
+	err := http.ListenAndServe(":"+port, nil)
 	if err != nil {
 		panic(err)
 	}

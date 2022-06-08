@@ -1,9 +1,7 @@
 package broker
 
 import (
-	"fmt"
 	"log"
-	"time"
 )
 
 var Broker *broker
@@ -33,25 +31,4 @@ func init() {
 	Broker = &broker{}
 	Broker.Input = make(chan string)
 	Broker.Subs = map[chan string]bool{}
-	go func() {
-		for i := 0; ; i++ {
-			log.Println("Send x")
-			Broker.Input <- fmt.Sprintf("tick %d", i)
-			time.Sleep(time.Second)
-		}
-	}()
-	//	go run()
-}
-
-func run() {
-	for {
-		select {
-		case m := <-Broker.Input:
-			log.Println("recoit ", m)
-			for k, _ := range Broker.Subs {
-				log.Println("Envoi")
-				k <- m
-			}
-		}
-	}
 }
