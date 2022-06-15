@@ -23,7 +23,9 @@ func (b broker) Remove(c chan string) {
 func (b broker) Send(msg string) {
 	for k, _ := range Broker.Subs {
 		log.Printf("envoi %s vers %v", msg, k)
-		k <- msg
+		go func(ch chan string) {
+			ch <- msg
+		}(k)
 	}
 }
 
